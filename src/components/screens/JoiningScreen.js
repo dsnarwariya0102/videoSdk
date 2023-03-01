@@ -132,15 +132,18 @@ export function JoiningScreen({
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { deviceId },
     });
+
     const videoTracks = stream.getVideoTracks();
 
     const videoTrack = videoTracks.length ? videoTracks[0] : null;
 
     setVideoTrack(videoTrack);
   };
+
   const changeMic = async (deviceId) => {
     const currentAudioTrack = audioTrackRef.current;
     currentAudioTrack && currentAudioTrack.stop();
+
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: { deviceId },
     });
@@ -154,9 +157,13 @@ export function JoiningScreen({
 
   const getDefaultMediaTracks = async ({ mic, webcam, firstTime }) => {
     if (mic) {
+      console.log("----MICCTRUECCCCC--->>>", mic);
+
       const audioConstraints = {
         audio: true,
       };
+
+      console.log("---audioConstraints->>>>", audioConstraints);
 
       const stream = await navigator.mediaDevices.getUserMedia(
         audioConstraints
@@ -171,6 +178,8 @@ export function JoiningScreen({
           id: audioTrack?.getSettings()?.deviceId,
         });
       }
+    } else {
+      console.log("----MICCCFALSECCCC--->>>", mic);
     }
 
     if (webcam) {
@@ -212,6 +221,18 @@ export function JoiningScreen({
 
   const getDevices = async ({ micEnabled, webcamEnabled }) => {
     try {
+      // const permissions = navigator.mediaDevices.getUserMedia({
+      //   audio: true,
+      //   video: true,
+      // });
+
+      // permissions
+      //   .then((stream) => {
+      //     alert("accepted the permissions");
+      //   })
+      //   .catch((err) => {
+      //     console.log(`Permission error-->>,${err.name} : ${err.message}`);
+      //   });
       const devices = await navigator.mediaDevices.enumerateDevices();
 
       const webcams = devices.filter((d) => d.kind === "videoinput");
@@ -232,7 +253,7 @@ export function JoiningScreen({
         firstTime: true,
       });
     } catch (err) {
-      console.log(err);
+      console.log("GET DEVICES--->>>", err);
     }
   };
 

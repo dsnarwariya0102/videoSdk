@@ -1,6 +1,7 @@
 const API_BASE_URL = "https://api.videosdk.live";
 const VIDEOSDK_TOKEN = process.env.REACT_APP_VIDEOSDK_TOKEN;
-const API_AUTH_URL = process.env.REACT_APP_AUTH_URL;
+// const API_AUTH_URL = "http://localhost:3001";
+const API_AUTH_URL = "http://192.168.8.180:3001";
 
 export const getToken = async () => {
   if (VIDEOSDK_TOKEN && API_AUTH_URL) {
@@ -14,6 +15,7 @@ export const getToken = async () => {
       method: "GET",
     });
     const { token } = await res.json();
+    console.log("---TOEKN->>>>>>", token);
     return token;
   } else {
     console.error("Error: ", Error("Please add a token or Auth Server URL"));

@@ -38,6 +38,7 @@ const App = () => {
 
   return (
     <>
+      {console.log("----isMeetingStarted>>>>", isMeetingStarted)}
       {isMeetingStarted ? (
         <MeetingAppProvider
           selectedMic={selectedMic}
